@@ -1,0 +1,6 @@
+mocha_istanbul: test
+
+eslint:
+
+  - lib/**/*.js
+  - test/**/*.js

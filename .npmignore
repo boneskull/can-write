@@ -1,0 +1,4 @@
+test/
+grunt/
+Gruntfile.js
+.*
