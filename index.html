@@ -1,0 +1,117 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>can-write by boneskull</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/github-light.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>can-write</h1>
+        <p>Test if a file or directory is writable. Because sometimes you just gotta know.</p>
+
+        <p class="view"><a href="https://github.com/boneskull/can-write">View the Project on GitHub <small>boneskull/can-write</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/boneskull/can-write/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/boneskull/can-write/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/boneskull/can-write">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h1>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">var</span> canWrite <span class="pl-k">=</span> <span class="pl-c1">require</span>(<span class="pl-s"><span class="pl-pds">'</span>can-write<span class="pl-pds">'</span></span>);
+
+<span class="pl-k">return</span> canWrite(<span class="pl-s"><span class="pl-pds">'</span>/path/to/my/file<span class="pl-pds">'</span></span>)
+  .then(<span class="pl-k">function</span>(<span class="pl-smi">result</span>) {
+    <span class="pl-k">if</span> (result) {
+      <span class="pl-c">// writable</span>
+    } <span class="pl-k">else</span> {
+      <span class="pl-c">// not writable</span>
+    }
+  }, <span class="pl-k">function</span>(<span class="pl-smi">err</span>) {
+    <span class="pl-c">// some sort of error</span>
+  });
+
+<span class="pl-c">// alternatively:</span>
+
+canWrite(<span class="pl-s"><span class="pl-pds">'</span>/path/to/my/file<span class="pl-pds">'</span></span>, <span class="pl-k">function</span>(<span class="pl-smi">err</span>, <span class="pl-smi">result</span>) {
+  <span class="pl-k">if</span> (err) {
+    <span class="pl-c">// handle error </span>
+  } <span class="pl-k">else</span> {
+    <span class="pl-k">if</span> (result) {
+    <span class="pl-c">// writable</span>
+    } <span class="pl-k">else</span> {
+      <span class="pl-c">// not writable</span>
+    }
+  }
+});</pre></div>
+
+<h2>
+<a id="readability" class="anchor" href="#readability" aria-hidden="true"><span class="octicon octicon-link"></span></a>Readability</h2>
+
+<p>Writability does not always imply readability.  Think a "Drop Box", wherein guest users can put files in, but cannot read the contents.</p>
+
+<p>To check readability, pass a truthy second parameter:</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">var</span> canWrite <span class="pl-k">=</span> <span class="pl-c1">require</span>(<span class="pl-s"><span class="pl-pds">'</span>can-write<span class="pl-pds">'</span></span>);
+
+<span class="pl-k">return</span> canWrite(<span class="pl-s"><span class="pl-pds">'</span>/path/to/my/file<span class="pl-pds">'</span></span>, <span class="pl-c1">true</span>)
+  .then(<span class="pl-k">function</span>(<span class="pl-smi">result</span>) {
+    <span class="pl-k">if</span> (result) {
+      <span class="pl-c">// readable &amp; writable</span>
+    } <span class="pl-k">else</span> {
+      <span class="pl-c">// either not readable or not writable.</span>
+      <span class="pl-c">// if you need to know, call canWrite() again without the flag.</span>
+    }
+  }, <span class="pl-k">function</span>(<span class="pl-smi">err</span>) {
+    <span class="pl-c">// some sort of error</span>
+  });</pre></div>
+
+<h1>
+<a id="fair-warning" class="anchor" href="#fair-warning" aria-hidden="true"><span class="octicon octicon-link"></span></a>Fair Warning</h1>
+
+<p>It's an <em>anti-pattern</em> to check writability.</p>
+
+<p>You generally want to just <strong>do what you're going to do</strong>, then recover from an error.</p>
+
+<p>For example, say you need to create a file:</p>
+
+<div class="highlight highlight-source-js"><pre>fs.writeFile(<span class="pl-s"><span class="pl-pds">'</span>/some/filepath<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>some data<span class="pl-pds">'</span></span>, <span class="pl-k">function</span>(<span class="pl-smi">err</span>) {
+  <span class="pl-k">if</span> (err.<span class="pl-c1">code</span> <span class="pl-k">===</span> <span class="pl-s"><span class="pl-pds">'</span>EACCESS<span class="pl-pds">'</span></span>) {
+    <span class="pl-c">// the file is not writable.</span>
+  }
+});</pre></div>
+
+<p>In other words: don't use this module unless you really, <em>really</em>, <strong><em>really</em></strong> need to check whether something is writable.</p>
+
+<h1>
+<a id="install" class="anchor" href="#install" aria-hidden="true"><span class="octicon octicon-link"></span></a>Install</h1>
+
+<div class="highlight highlight-source-shell"><pre>$ npm install can-write</pre></div>
+
+<h1>
+<a id="license" class="anchor" href="#license" aria-hidden="true"><span class="octicon octicon-link"></span></a>License</h1>
+
+<p>© 2015 <a href="https://boneskull.com">Christopher Hiller</a>.  Licensed MIT.</p>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/boneskull">boneskull</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
