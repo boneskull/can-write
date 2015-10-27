@@ -32,7 +32,7 @@
     "stat"
   ],
   "dependencies": {
-    "bluebird": "^2.10.1",
+    "bluebird": "^3.0.0",
     "graceful-fs": "^4.1.2"
   },
   "devDependencies": {
