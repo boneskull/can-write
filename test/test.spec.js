@@ -37,7 +37,7 @@ describe('can-write', function() {
     it('should resolve w/ true if it finds writability', function() {
       return tmp.fileAsync()
         .then(function(info) {
-          return expect(canWrite(info[0])).to.eventually.equal(true);
+          return expect(canWrite(info)).to.eventually.equal(true);
         });
     });
 
@@ -48,14 +48,14 @@ describe('can-write', function() {
           return info;
         })
         .then(function(info) {
-          return expect(canWrite(info[0])).to.eventually.equal(false);
+          return expect(canWrite(info)).to.eventually.equal(false);
         });
     });
 
     it('should resolve w/ true if it also finds readability', function() {
       return tmp.fileAsync()
         .then(function(info) {
-          return expect(canWrite(info[0], true)).to.eventually.equal(true);
+          return expect(canWrite(info, true)).to.eventually.equal(true);
         });
     });
 
@@ -67,7 +67,7 @@ describe('can-write', function() {
             return info;
           })
           .then(function(info) {
-            return expect(canWrite(info[0], true)).to.eventually.equal(false);
+            return expect(canWrite(info, true)).to.eventually.equal(false);
           });
       });
   });
@@ -76,7 +76,7 @@ describe('can-write', function() {
     it('should resolve w/ true if it finds writability', function() {
       return tmp.dirAsync()
         .then(function(info) {
-          return expect(canWrite(info[0])).to.eventually.equal(true);
+          return expect(canWrite(info)).to.eventually.equal(true);
         });
     });
 
@@ -87,14 +87,14 @@ describe('can-write', function() {
           return info;
         })
         .then(function(info) {
-          return expect(canWrite(info[0])).to.eventually.equal(false);
+          return expect(canWrite(info)).to.eventually.equal(false);
         });
     });
 
     it('should resolve w/ true if it also finds readability', function() {
       return tmp.dirAsync()
         .then(function(info) {
-          return expect(canWrite(info[0], true)).to.eventually.equal(true);
+          return expect(canWrite(info, true)).to.eventually.equal(true);
         });
     });
 
@@ -106,7 +106,7 @@ describe('can-write', function() {
             return info;
           })
           .then(function(info) {
-            return expect(canWrite(info[0], true)).to.eventually.equal(false);
+            return expect(canWrite(info, true)).to.eventually.equal(false);
           });
       });
   });
