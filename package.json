@@ -38,7 +38,7 @@
   "devDependencies": {
     "chai": "^3.0.0",
     "chai-as-promised": "^5.1.0",
-    "codeclimate-test-reporter": "^0.1.1",
+    "codeclimate-test-reporter": "^0.2.1",
     "coveralls": "^2.11.4",
     "eslint": "^1.5.1",
     "grunt": "^0.4.5",
